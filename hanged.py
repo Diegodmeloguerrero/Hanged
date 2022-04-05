@@ -49,7 +49,7 @@ HANGED = ['''
      / \  |
           |
     =========''']
-words = 'valoracion aprenderpython comida juego python web imposible variable curso volador cabeza reproductor mirada escritor billete lapicero celular valor revista gratuito disco voleibol anillo estrella'.split()
+words = 'facundo comida juegos python imposible java variable volador cabeza reproductor mirada molesto escrito lapicero minas celula valor revista lava gratuito discos cartucho anillos estrellas platzi profe'.split()
 
 def searchrandomswords(wordslist):
     
@@ -60,7 +60,7 @@ def displayBoard(HANGED, wrongletter, correctletter, secretword):
     print(HANGED[len(wrongletter)])
     print ("")
     end = " "
-    print ('Letras incorrectas:', end)
+    print ('Fallos: ', end)
     for letter in wrongletter:
         print (letter, end)
     print ("")
@@ -68,55 +68,59 @@ def displayBoard(HANGED, wrongletter, correctletter, secretword):
     for i in range(len(secretword)): 
         if secretword[i] in correctletter:
             space = space[:i] + secretword[i] + space[i+1:]
-    for letra in space:
+    for letter in space:
         print (letter, end)
     print ("")
 
 def choseletter(someletter):
 
     while True:
-        print ('Adivina una letra:')
+        print ('Escribe una letra:')
         letter = input()
         letter = letter.lower()
         if len(letter) != 1:
-            print ('Introduce una sola letra.') 
+            print ('Solo es valida una letra.') 
         elif letter in someletter:
-            print ('Ya has elegido esa letra ¿Qué tal si pruebas con otra?')
+            print ('Esa letra ya la has jugado, mejor escribe otra :)')
         elif letter not in 'abcdefghijklmnopqrstuvwxyz':
             print ('Elije una letra.')
         else:
             return letter
 
 def start():
-    print ('Quieres jugar de nuevo? (Si o No)')
+
+    print ('¿Quieres jugar otra vez? S(si) N(no)')
     return input().lower().startswith('s')
 
-print ('A H O R C A D O')
+print(""" 
+─█▀▀█ 　 ░█─░█ 　 ░█▀▀▀█ 　 ░█▀▀█ 　 ░█▀▀█ 　 ─█▀▀█ 　 ░█▀▀▄ 　 ░█▀▀▀█ 
+░█▄▄█ 　 ░█▀▀█ 　 ░█──░█ 　 ░█▄▄▀ 　 ░█─── 　 ░█▄▄█ 　 ░█─░█ 　 ░█──░█ 
+░█─░█ 　 ░█─░█ 　 ░█▄▄▄█ 　 ░█─░█ 　 ░█▄▄█ 　 ░█─░█ 　 ░█▄▄▀ 　 ░█▄▄▄█""")
 wrongletter = ""
 correctletter = ""
-words = searchrandomswords(words)
+secretword = searchrandomswords(words)
 endgame = False
 while True:
-    displayBoard(HANGED, wrongletter, correctletter, secretword)
-
+    displayBoard(HANGED, wrongletter, correctletter, secretword,)
+    
     letter = choseletter(wrongletter + correctletter)
     if letter in secretword:
         correctletter = correctletter + letter
 
         findletters = True
         for i in range(len(secretword)):
-            if secretword[i] not in wrongletter:
+            if secretword[i] not in correctletter:
                 findletters = False
                 break
         if findletters:
-            print ('¡Muy bien! La palabra secreta es "' + secretword + '"! ¡Has ganado!')
+            print ('¡Ganaste! tu palabra era "' + secretword + '"!!!!')
             endgame = True
     else:
         wrongletter = wrongletter + letter
 
         if len(wrongletter) == len(HANGED) - 1:
             displayBoard(HANGED, wrongletter, correctletter, secretword)
-            print ('¡Se ha quedado sin letras!\nDespues de ' + str(len(wrongletter)) + ' letras erroneas y ' + str(len(correctletter)) + ' letras correctas, la palabra era "' + secretword + '"')
+            print ('¡Te quedaste sin letras!\nDespuesde ' + str(len(wrongletter)) + ' Fallos ' + str(len(correctletter)) + ' Aciertos, la palabra era "' + secretword + '"')
             endgame = True
 
     if endgame:
